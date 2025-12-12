@@ -3,6 +3,7 @@ namespace AcitivityOne;
 entity Books {
     key ID        : UUID;                  // Primary Key - Book ID
     borrowerName  : String(50);            // Borrower's Name
+    borrowerID    : String(10);            // Borrower's ID
     bookTitle     : String(100);           // Book Title
     authorName    : String(100);           // Author Name
     readDate      : Date;                  // Date
