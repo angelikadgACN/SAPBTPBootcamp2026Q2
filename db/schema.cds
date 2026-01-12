@@ -33,7 +33,7 @@ entity Suppliers {
     PostalCode     : String(100);           // Postal Code
     Country        : String(100);           // Country
     Phone          : String(100);           // Phone
-    Fax            : Integer;               // Fax
+    Fax            : String;               // Fax
     HomePage       : String(200);           // Home Page
 }
 
@@ -41,4 +41,16 @@ entity Categories {
     CategoryID    : String(100);           // Category ID
     CategoryName  : String(100);           // Category Name
     Description   : String(100);           // Category Description
+}
+
+entity Combined {
+    ProductID       : UUID;
+    ProductName     : String(100);
+    SupplierID      : String(100);
+    CompanyName     : String(100);
+    Address         : String(100);
+    City            : String(100);
+    Region          : String(100);
+    CategoryName    : String(100);
+    Description     : String(100);
 }

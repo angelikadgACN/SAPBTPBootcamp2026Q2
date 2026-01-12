@@ -2,6 +2,12 @@
 const cds = require('@sap/cds');
 const { LogBooks } = require('../srv/setter/index');
 const { FetchBooks } = require('../srv/getter/index');
+const { FetchCombined } = require('../srv/getter/indexcomb');
+const { InsertProducts } = require('../srv/setter/indexprod');
+const { InsertSuppliers } = require('../srv/setter/indexsupp');
+const { InsertCategories } = require('../srv/setter/indexcat');
+const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
+
 
 module.exports = async srv => {
     //Before inserting a Book
@@ -29,5 +35,59 @@ module.exports = async srv => {
         const { id } = req.data;
         const result = await FetchBooks(id);
         return result;
+    });
+
+    srv.on('insertTBProducts', async () => {
+        const result = await InsertProducts();
+        return result;
+    });
+
+    srv.on('insertTBSuppliers', async () => {
+        const result = await InsertSuppliers();
+        return result;
+    });
+
+    srv.on('insertTBCategories', async () => {
+        const result = await InsertCategories();
+        return result;
+    });
+
+    srv.on('getCombined', async () => {
+        const result = await FetchCombined();
+        return result;
+    });
+
+    srv.on('northwind', async (req) => {
+        try {
+            const response = await executeHttpRequest(
+                {
+                    destinationName: "northwind",
+                },
+                {
+                    method: "GET",
+                    url: "/V3/Northwind/Northwind.svc/Products?$format=json",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                },
+                {
+                    method: "GET",
+                    url: "/V3/Northwind/Northwind.svc/Suppliers?$format=json",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                },
+                {
+                    method: "GET",
+                    url: "/V3/Northwind/Northwind.svc/Categories?$format=json",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            return { 'MESSAGE': error.message || error.toString() };
+        }
     });
 };

@@ -30,6 +30,12 @@
       "[production]": {
         "auth": "xsuaa"
       },
+      "northwind": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "northwind" 
+        }
+      },
       "destinations": true,
       "html5-repo": true
     }
